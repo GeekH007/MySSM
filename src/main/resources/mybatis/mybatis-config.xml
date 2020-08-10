@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--开启驼峰命名自动转换
+    一般数据库命名规则一般是user_name,而我们实体类中一般使用userName,开启后就可以自动映射了
+    -->
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"></setting>
+    </settings>
+</configuration>

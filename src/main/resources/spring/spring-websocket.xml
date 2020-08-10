@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:websocket="http://www.springframework.org/schema/websocket"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+            http://www.springframework.org/schema/websocket
+            http://www.springframework.org/schema/websocket/spring-websocket-4.0.xsd">
+    <!-- websocket处理类 -->
+    <bean id="myHandler" class="com.agu.socket.ChatSocket"/>
+    <bean id="ObjectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
+
+    <!-- 配置握手拦截器 -->
+    <websocket:handlers>
+        <!-- 配置消息处理bean和路径的映射关系 -->
+        <websocket:mapping path="/websocket.html" handler="myHandler"/>
+        <!-- 配置握手拦截器 -->
+        <websocket:handshake-interceptors>
+            <bean class="com.agu.socket.config.interceptor.ChatHandshakeInterceptor"/>
+        </websocket:handshake-interceptors>
+    </websocket:handlers>
+
+    <!--  注册 sockJS -->
+    <websocket:handlers>
+        <websocket:mapping path="/sockjs/websocket.html" handler="myHandler"/>
+        <websocket:sockjs/>
+    </websocket:handlers>
+</beans>

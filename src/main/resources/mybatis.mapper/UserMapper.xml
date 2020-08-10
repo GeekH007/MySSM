@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间就是接口的全限定名路径-->
+<mapper namespace="com.agu.mapper.UserMapper">
+    <!--id的值:要和接口UserMapper下的方法名一致
+    resultType:1.要和方法返回值类型一样，或者是返回值类型的集合
+               2.原本需要写返回值类型的权限定名路径，但是我们在applicationContext里配置了别名所属的包
+               所以只要写类名即可     -->
+
+    <select id="findAllUsers" resultType="User">
+		select * from tb_user
+	</select>
+</mapper>

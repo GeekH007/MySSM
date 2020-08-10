@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- 引入外部的属性资源文件,把我们刚刚配置的jdbc配置文件引入进来 -->
+<!--    <context:property-placeholder location="classpath:jdbc.properties"/>-->
+
+    <context:property-placeholder location="classpath*:*.properties" />
+
+    <!-- 扫包，只需要扫service的即可，Controller的包springMVC会扫描，mapper层的，下面类会帮我们扫描 -->
+    <context:component-scan base-package="com.agu.service"></context:component-scan>
+    <!-- 使用专门扫描mapper接口的类 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.agu.mapper"></property>
+    </bean>
+
+    <!-- 配置数据源 ，这里了用的是阿里巴巴的德鲁伊数据源-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driverClass}"></property>
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+    <!--sqlSession工厂，我们对数据库增删改查就靠他-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 注入配置的数据源 -->
+        <property name="dataSource" ref="dataSource"></property>
+        <!-- 注入mybatis-config配置文件 -->
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"></property>
+        <!-- 注入mapper.xml文件位置，
+        这里的/**/*.xml写法，只要是/mybatis/mapper下的都可以注入进来，哪怕里面又加了几个文件夹-->
+        <property name="MapperLocations" value="classpath:mybatis.mapper/*.xml"></property>
+        <!-- 配置别名所属的包名，配置了这个，我们UserMapper.xml文件下的resultType就只需要写类名即可-->
+        <property name="typeAliasesPackage" value="com.agu.domain"></property>
+    </bean>
+
+
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!-- 配置事务属性 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <!--配置事务的属性，如果方法名是find开头，只允许查询业务，不允许增删改业务，
+            这样可以防错，如果写了删除或者增加功能，则会抛出异常，提醒开发人员-->
+            <tx:method name="find*" read-only="true"/>
+            <!--其他方法做增删改功能-->
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+    <!-- 配置切面
+    配置了事务后，我们肯定要告诉spring,哪些方法需要加上事务 -->
+    <aop:config>
+        <!--配置切点-->
+        <aop:pointcut expression="execution(* com.agu.service.impl.*.*(..))" id="pointcut"/>
+        <!--将advice注入程序中pointcut位置的代码-->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
+    </aop:config>
+
+    <!-- 配置基于注解的声明式事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+
+
+
+    <import resource="spring-redis.xml"/>
+<!--    <import resource="spring-kafka.xml"/>-->
+</beans>

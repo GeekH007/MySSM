@@ -1,0 +1,248 @@
+/* head */
+body {
+    font-family: "Microsoft YaHei";
+}
+
+nav a, .nav-li a {
+    color: #f2f2f2 !important;
+}
+
+@media (min-width: 768px) {
+    .nav-li:hover {
+        background-color: black;
+        font-size: 20px;
+    }
+}
+
+nav {
+    background-color: #424a57 !important;
+}
+
+/* 页面内容 */
+.page-content {
+    width: 70%;
+    margin: 55px auto 0 auto;
+    min-width: 400px;
+}
+
+/* 错误提示 */
+.error-tip {
+    color: #a52529;
+}
+
+/* chat主体 */
+.chat-body {
+    height: 600px;
+    font-size: 16px;
+    position: relative;
+    border: 2px solid #cccccc;
+    background-color: #f2f2f2;
+}
+
+/* chat内容区域 */
+.chat-area {
+    width: 75%;
+    height: 480px;
+    min-width: 300px;
+    display: inline-block;
+    position: relative;
+    border-right: 2px solid #cccccc;
+    border-bottom: 2px solid #cccccc;
+    background: url(../image/chat-background-lg.jpg) no-repeat;
+    background-size: cover;
+    overflow-y: scroll;
+}
+
+/* chat用户列表 */
+.chat-bar {
+    width: 24%;
+    min-width: 60px;
+    height: 100%;
+    float: right;
+    cursor: default;
+    display: inline-block;
+    background-color: #f2f2f2;
+}
+
+.chat-bar-head {
+    text-align: center;
+    color: #ffffff;
+    margin-left: -20px;
+    line-height: 35px;
+    background-color: #424a57;
+}
+
+/* 用户列表项 */
+.chat-bar-per {
+    padding: 5px 0;
+    border-bottom: 1px solid #424a57;
+}
+
+.chat-bar-per .glyphicon {
+    color: #424a57;
+    margin: 2px 5px;
+}
+
+.chat-bar-per div {
+    color: #406BFF;
+    margin-left: 27px;
+}
+
+/* chat输入区域 */
+.chat-input {
+    width: 75%;
+    height: 110px;
+    padding-bottom: 30px;
+    border-right: 2px solid #cccccc;
+    overflow-y: scroll;
+    background-color: #fff;
+}
+
+/* 控制按钮区域 */
+.chat-control {
+    position: absolute;
+    right: 28%;
+    bottom: 0;
+}
+
+/* 字符数量提示 */
+.chat-size {
+    font-size: 14px;
+}
+
+/* chat内容整体 */
+.chat-content {
+    width: auto;
+    max-width: 55%;
+    clear: both;
+    position: relative;
+    margin: 10px 20px 5px 20px;
+}
+
+.chat-content-mine {
+    float: right;
+}
+
+.chat-content-theirs {
+    float: left;
+}
+
+/* chat内容-用户名 */
+.chat-content-mine span {
+    font-size: 12px;
+    font-weight: 500;
+    position: absolute;
+    right: 40px;
+}
+
+.chat-content-theirs span {
+    font-size: 12px;
+    font-weight: 500;
+    position: absolute;
+    left: 40px;
+}
+
+/* 系统消息 */
+.chat-content-system {
+    text-align: center;
+    color: #fff;
+    width: 30%;
+    min-width: 200px;
+    margin: 10px auto;
+    border-radius: 2px;
+    background-color: rgba(165, 157, 164, 0.4);
+}
+
+/* 系统消息-用户名 */
+.chat-content-system span {
+    color: #141429;
+    text-shadow: 4px 5px 6px rgba(91, 145, 204, 0.8);
+}
+
+/* chat内容-文本 */
+.chat-text {
+    min-width: 30px;
+    padding: 7px 5px;
+    margin-top: 20px;
+    word-break: break-all;
+    border-radius: 3px;
+}
+
+.chat-text-mine {
+    margin-right: 40px;
+    background-color: #18ff13;
+}
+
+.chat-text-theirs {
+    margin-left: 40px;
+    background-color: #fff;
+}
+
+/* chat内容-头像 */
+.chat-ico {
+    position: absolute;
+    top: 0;
+}
+
+.chat-ico-mine {
+    float: right;
+    right: 0;
+}
+
+.chat-ico-theirs {
+    float: left;
+    left: 0;
+}
+
+.chat-ico img {
+    width: 36px;
+}
+
+/* 用户列表按钮 */
+#view-online {
+    display: none;
+}
+
+/* 小屏幕设备设置 */
+@media (max-width: 960px) {
+    .page-content,
+    .chat-input {
+        width: 100%;
+    }
+
+    .page-header h1 {
+        margin-left: 30px;
+    }
+
+    .chat-area {
+        width: 100%;
+        background: url(../image/chat-background-sm.jpg) no-repeat;
+        background-size: cover;
+    }
+
+    .chat-bar {
+        width: 180px;
+        height: 481px;
+        position: absolute;
+        float: right;
+        right: 1px;
+        margin-top: -487px;
+        border: 2px solid #cccccc;
+        border-right: 0;
+        display: none;
+        overflow-y: scroll;
+    }
+
+    .chat-control {
+        bottom: 0;
+        right: 18px;
+    }
+
+    .chat-content {
+        max-width: 60%;
+    }
+
+    #view-online {
+        display: inline;
+    }
+}
